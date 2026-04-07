@@ -142,6 +142,6 @@ def analyze_flocs_ternary(image_path, crop_ratio=0.4, min_floc_area=5, max_floc_
 if __name__ == "__main__":
 
     # 图片路径
-    IMAGE_FILE = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_folders\insufficient\14_20.6_7KG\frame_1585.jpg"
+    IMAGE_FILE = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_folders\insufficient\14_20.6_7KG\frame_1585.jpg"
     
     analyze_flocs_ternary(IMAGE_FILE, crop_ratio=0.4, min_floc_area=5, max_floc_area=300, t_low=90, t_high=210)

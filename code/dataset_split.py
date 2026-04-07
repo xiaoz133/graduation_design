@@ -45,9 +45,9 @@ def split_dataset(csv_path, output_dir):
 
 if __name__ == "__main__":
     # 总表路径
-    INPUT_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experience\floc_multimodal_dataset.csv"
+    INPUT_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\floc_multimodal_dataset.csv"
     
     # 划分后的输出目录
-    OUTPUT_FOLDER = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_splits"
+    OUTPUT_FOLDER = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits"
     
     split_dataset(INPUT_CSV, OUTPUT_FOLDER)

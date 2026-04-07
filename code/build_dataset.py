@@ -152,7 +152,7 @@ def build_dataset_nested(root_dir, output_csv):
 # ================== 运行批量处理 ==================
 if __name__ == "__main__":
     # 将所有子文件夹都按照 "浊度_温度_加药量" 的格式重命名，例如 "14_20.6_20KG"，以便自动解析理化参数
-    DATASET_ROOT = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_folders"
-    OUTPUT_CSV_FILE = r"C:\Users\94508\Desktop\zds\graduation_design\experience\floc_multimodal_dataset.csv"
+    DATASET_ROOT = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_folders"
+    OUTPUT_CSV_FILE = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\floc_multimodal_dataset.csv"
     
     build_dataset_nested(DATASET_ROOT, OUTPUT_CSV_FILE)

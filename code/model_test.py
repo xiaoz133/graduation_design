@@ -108,12 +108,12 @@ def evaluate_model_on_test_set(test_csv, train_csv, model_path):
 # ================== 运行测试 ==================
 if __name__ == "__main__":
     # 1. 测试集 CSV 路径 
-    TEST_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_splits\test_set.csv"
+    TEST_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\test_set.csv"
     
     # 2. 训练集 CSV 路径 (用于恢复 StandardScaler)
-    TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_splits\train_set.csv"
+    TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\train_set.csv"
     
     # 3. 最新训练出来的 6 维输入的模型路径
-    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experience\saved_models\0.7\floc_mlp_acc0.80_lr0.001_bs32_0407_1746.pth"
+    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\saved_models\0.7\floc_mlp_acc0.80_lr0.001_bs32_0407_1746.pth"
     
     evaluate_model_on_test_set(TEST_CSV, TRAIN_CSV, SAVED_MODEL)

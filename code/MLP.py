@@ -165,8 +165,8 @@ def train_model(train_csv, val_csv, epochs=50, batch_size=32, lr=0.001):
 # ================== 运行代码 ==================
 if __name__ == "__main__":
     #训练集和验证集路径
-    TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_splits\train_set.csv"
-    VAL_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_splits\val_set.csv"
+    TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\train_set.csv"
+    VAL_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\val_set.csv"
     
     # 开始训练
     train_model(TRAIN_CSV, VAL_CSV, epochs=50, batch_size=32, lr=0.001)

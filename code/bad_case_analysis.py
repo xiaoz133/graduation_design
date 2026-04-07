@@ -108,16 +108,16 @@ def extract_bad_cases(test_csv, train_csv, model_path, original_dataset_root, ou
 # ================== 运行代码 ==================
 if __name__ == "__main__":
     # 1. 你的测试集 CSV 和 训练集 CSV
-    TEST_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_splits\test_set.csv"
-    TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_splits\train_set.csv"
-    
+    TEST_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\test_set.csv"
+    TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\train_set.csv"
+
     # 2. 你最新跑出来的模型权重路径
-    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experience\saved_models\floc_mlp_acc0.76_lr0.0001_bs32_0407_1706.pth"
+    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\saved_models\floc_mlp_acc0.76_lr0.0001_bs32_0407_1706.pth"
     
     # 3. 最早构建数据集时的原始图片总目录 (为了能回去找到原图)
-    ORIGINAL_DATASET_ROOT = r"C:\Users\94508\Desktop\zds\graduation_design\experience\dataset_folders"
+    ORIGINAL_DATASET_ROOT = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_folders"
     
     # 4. 把挑出来的错例保存
-    OUTPUT_ERROR_DIR = r"C:\Users\94508\Desktop\zds\graduation_design\experience\bad_cases_analysis"
+    OUTPUT_ERROR_DIR = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\bad_cases_analysis"
     
     extract_bad_cases(TEST_CSV, TRAIN_CSV, SAVED_MODEL, ORIGINAL_DATASET_ROOT, OUTPUT_ERROR_DIR)
