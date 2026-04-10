@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-def analyze_flocs_by_sharpness(image_path, crop_ratio=0.6, min_floc_area=5, max_floc_area=300, edge_thresh=25):
+def analyze_flocs_by_sharpness(image_path, crop_ratio=0.7, min_floc_area=5, max_floc_area=300, edge_thresh=25):
     """
     使用边缘梯度（清晰度）方法分析矾花图像：过滤高亮但模糊的焦外背景。
     

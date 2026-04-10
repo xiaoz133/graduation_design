@@ -112,7 +112,7 @@ if __name__ == "__main__":
     TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\train_set.csv"
 
     # 2. 你最新跑出来的模型权重路径
-    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\saved_models\floc_mlp_acc0.76_lr0.0001_bs32_0407_1706.pth"
+    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\saved_models\0.7\floc_mlp_acc0.80_lr0.001_bs32_0407_1746.pth"
     
     # 3. 最早构建数据集时的原始图片总目录 (为了能回去找到原图)
     ORIGINAL_DATASET_ROOT = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_folders"
