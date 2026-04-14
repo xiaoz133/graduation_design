@@ -1,42 +1,52 @@
 import os
 # 允许 OpenMP 库重复加载，防止运行崩溃
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+
 import torch
 import torch.nn as nn
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix
 
 # ==========================================
-# 1. 重建模型架构
+# 1. 重建 CNN 模型架构 (必须与训练时完全一致)
 # ==========================================
-class FlocMLP(nn.Module):
-    def __init__(self, input_dim=6, num_classes=3):
-        super(FlocMLP, self).__init__()
-        self.network = nn.Sequential(
-            nn.Linear(input_dim, 32),
-            nn.BatchNorm1d(32),
-            nn.ReLU(),
-            nn.Dropout(0.2),
-            
-            nn.Linear(32, 16),
+class FlocCNN(nn.Module):
+    def __init__(self, input_features=6, num_classes=3):
+        super(FlocCNN, self).__init__()
+        
+        # 卷积特征提取模块
+        self.features = nn.Sequential(
+            nn.Conv1d(in_channels=1, out_channels=16, kernel_size=3, padding=1),
             nn.BatchNorm1d(16),
             nn.ReLU(),
-            nn.Dropout(0.2),
-            
-            nn.Linear(16, num_classes) 
+            nn.Conv1d(in_channels=16, out_channels=32, kernel_size=3, padding=1),
+            nn.BatchNorm1d(32),
+            nn.ReLU(),
         )
+        
+        # 分类器模块
+        self.classifier = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(32 * input_features, 32),
+            nn.BatchNorm1d(32),
+            nn.ReLU(),
+            nn.Dropout(0.3), 
+            nn.Linear(32, num_classes)
+        )
+
     def forward(self, x):
-        return self.network(x)
+        x = self.features(x)
+        x = self.classifier(x)
+        return x
 
 # ==========================================
 # 2. 核心评估函数
 # ==========================================
 def evaluate_model_on_test_set(test_csv, train_csv, model_path):
-    print("正在加载数据与模型，准备进行最终评估...\n")
+    print("正在加载数据与 CNN 模型，准备进行最终评估...\n")
     
-    # 1. 明确我们要使用的 6 个特征
     feature_cols = [
         'raw_turbidity', 
         'raw_temperature', 
@@ -46,28 +56,26 @@ def evaluate_model_on_test_set(test_csv, train_csv, model_path):
         'floc_density'
     ]
     
-    # 2. 恢复 StandardScaler
     train_df = pd.read_csv(train_csv)
     scaler = StandardScaler()
     scaler.fit(train_df[feature_cols].values)
     
-    # 3. 读取并处理测试集
     test_df = pd.read_csv(test_csv)
     X_test_raw = test_df[feature_cols].values
     y_test_numpy = test_df['label'].values
     X_test_scaled = scaler.transform(X_test_raw)
     
-    # 4. 转换为张量
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    X_tensor = torch.FloatTensor(X_test_scaled).to(device)
+    
+    # 【核心修改】：为 1D-CNN 增加 Channel 维度 (unsqueeze(1))
+    X_tensor = torch.FloatTensor(X_test_scaled).unsqueeze(1).to(device)
     y_tensor = torch.LongTensor(y_test_numpy).to(device)
     
-    # 5. 加载模型
-    model = FlocMLP(input_dim=6, num_classes=3).to(device)
+    # 实例化 CNN 模型并加载权重
+    model = FlocCNN(input_features=6, num_classes=3).to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
     
-    # 6. 模型推理
     with torch.no_grad():
         outputs = model(X_tensor)
         _, predictions = torch.max(outputs, 1)
@@ -77,20 +85,15 @@ def evaluate_model_on_test_set(test_csv, train_csv, model_path):
     # ==========================================
     # 3. 打印评估报告
     # ==========================================
-    from sklearn.metrics import accuracy_score, confusion_matrix
-    
-    # 计算总体准确率与混淆矩阵
     acc = accuracy_score(y_test_numpy, predictions_numpy)
     cm = confusion_matrix(y_test_numpy, predictions_numpy)
     
-    # 通过混淆矩阵计算每个类别的独立准确率 (对角线数值 / 该行总数)
-    # 加上 if 判断是为了防止某种类别在测试集中正好有 0 条数据导致除以 0 报错
     acc_normal = cm[0][0] / sum(cm[0]) if sum(cm[0]) > 0 else 0
     acc_excessive = cm[1][1] / sum(cm[1]) if sum(cm[1]) > 0 else 0
     acc_insufficient = cm[2][2] / sum(cm[2]) if sum(cm[2]) > 0 else 0
     
     print("="*50)
-    print("测试集评估结果:")
+    print("测试集评估结果 (1D-CNN):")
     print("="*50)
     print(f"测试集总数据量: {len(test_df)} 条")
     print(f"总体预测准确率: {acc * 100:.2f}%\n")
@@ -110,12 +113,11 @@ def evaluate_model_on_test_set(test_csv, train_csv, model_path):
 
 # ================== 运行测试 ==================
 if __name__ == "__main__":
-    # 1. 测试集 CSV 路径 
+    # 替换为你实际的测试集和训练集路径
     TEST_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\test_set.csv"
-    
-    # 2. 训练集 CSV 路径 (用于恢复 StandardScaler)
     TRAIN_CSV = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_splits\train_set.csv"
     
-    # 3. 最新训练出来的 6 维输入的模型路径
-    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\saved_models\floc_mlp_acc0.88_lr0.001_bs32_0412_2023.pth"
+    # 替换为最新训练出来的 1D-CNN 模型路径 (.pth)
+    SAVED_MODEL = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\saved_models\floc_cnn_acc0.86_lr0.001_bs32_0412_2029.pth"
+    
     evaluate_model_on_test_set(TEST_CSV, TRAIN_CSV, SAVED_MODEL)

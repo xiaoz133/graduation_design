@@ -6,7 +6,7 @@ import numpy as np
 # ==========================================
 # 1. 特征提取函数
 # ==========================================
-def extract_features(image_path, crop_ratio=0.7, min_floc_area=5, max_floc_area=300, edge_thresh=25):
+def extract_features(image_path, crop_ratio=0.7, min_floc_area=5, max_floc_area=300, edge_thresh=15):
     """
     特征提取函数（基于边缘清晰度）：
     从单张图片中提取真正处于焦平面内的矾花数量、最大面积、最小面积和密度特征。

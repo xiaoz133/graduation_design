@@ -64,8 +64,8 @@ def extract_frames_by_time(video_path, output_dir, interval_sec=0.2):
 # ================== 使用示例 ==================
 if __name__ == "__main__":
     # 视频文件路径
-    INPUT_VIDEO = r"C:\Users\94508\Downloads\混凝实验矾花视频\14NTU-14KGoutput_20260402_140129.mp4"
+    INPUT_VIDEO = r"C:\Users\94508\Downloads\混凝实验矾花视频\14NTU_16kgoutput_20260410_163251.mp4"
     # 保存图片的文件夹名称
-    OUTPUT_FOLDER = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset\normal\14_14KG"
+    OUTPUT_FOLDER = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_folders\normal\14_24.1_16KG"
     # 执行提取，间隔为 0.2 秒
     extract_frames_by_time(INPUT_VIDEO, OUTPUT_FOLDER, interval_sec=0.2)

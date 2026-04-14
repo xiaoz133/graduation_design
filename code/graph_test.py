@@ -102,6 +102,5 @@ def analyze_flocs_by_sharpness(image_path, crop_ratio=0.7, min_floc_area=5, max_
 
 if __name__ == "__main__":
     # 请替换为测试图像路径
-    IMAGE_FILE = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_folders\normal\14_20.6_12KG\frame_1700.jpg"
-    
-    analyze_flocs_by_sharpness(IMAGE_FILE, crop_ratio=0.7, min_floc_area=5, max_floc_area=300, edge_thresh=25)
+    IMAGE_FILE = r"C:\Users\94508\Desktop\zds\graduation_design\experiment\dataset_folders\insufficient\14_24.1_11KG\frame_4480.jpg"
+    analyze_flocs_by_sharpness(IMAGE_FILE, crop_ratio=0.7, min_floc_area=5, max_floc_area=300, edge_thresh=15)
